@@ -29,5 +29,9 @@ runs:
   steps:
     - run: python3 -V
       shell: bash
+    - run: pip list
+      shell: bash
+    - run: env
+      shell: bash
     - run: ${{ github.action_path }}/inspect.py
       shell: bash
