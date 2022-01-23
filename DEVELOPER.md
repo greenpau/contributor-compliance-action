@@ -1,5 +1,32 @@
 # Development Notes
 
+<!-- begin-markdown-toc -->
+## Table of Contents
+
+* [Development Environment](#development-environment)
+* [Github Action](#github-action)
+
+<!-- end-markdown-toc -->
+
+## Development Environment
+
+Create experimental directory `~/experimental/gh`:
+
+```bash
+mkdir -p ~/experimental/gh && cd ~/experimental/gh
+```
+
+Create `contributor-compliance-action` and `test-inspect` repositories in Github.
+
+Next, clone it:
+
+```bash
+cd ~/experimental/gh && git clone git@github.com:greenpau/contributor-compliance-action.git
+cd ~/experimental/gh && git clone git@github.com:greenpau/test-inspect.git
+```
+
+## Github Action
+
 This Github action has access to the following environment variables.
 
 ```
