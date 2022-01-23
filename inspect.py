@@ -45,7 +45,8 @@ def main():
     args_input = sys.argv[1:]
     try:
         piped_input = capture_stdin()
-        piped_input_found = True
+        if piped_input:
+            piped_input_found = True
     except TimeoutError:
         pass
 

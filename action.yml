@@ -2,6 +2,9 @@ name: OSS Contributor Compliance
 description: >
   Inspects a pull request for the compliance with OSS contributing
   guidelines.
+branding:
+  icon: 'check-square'
+  color: 'black'
 inputs:
   cla_consent_required:
     description: Indicates whether CLA consent is required.
