@@ -56,7 +56,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: inspection
-        uses: greenpau/contributor-compliance-action@v1.0.16
+        uses: greenpau/contributor-compliance-action@v1.0.17
         with:
           cla_consent_required: true
           signed_off_required: true
