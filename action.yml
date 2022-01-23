@@ -35,7 +35,8 @@ runs:
         pwd
         ls -alh
         git --no-pager status
-        git --no-pager log 
+        git --no-pager log
+        git diff HEAD~1
       shell: bash
     - run: ${{ github.action_path }}/scripts/inspect.py
       shell: bash
