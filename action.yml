@@ -1,0 +1,28 @@
+name: OSS Contributor Compliance
+description: >
+  Inspects a pull request for the compliance with OSS contributing
+  guidelines.
+inputs:
+  cla_consent_required:
+    description: Indicates whether CLA consent is required.
+    required: true
+  signed_off_required:
+    description: Indicates whether Signed-off-by is required.
+    required: true
+  issue_required:
+    description: >
+      Indicates whether a Github issue must be referenced in
+      one or more commits in a pull request.
+    required: true
+  max_commits:
+    description: The maximum number of commits in a pull request.
+    required: true
+  cla_consent_path:
+    description: The path to CLA consent file.
+    required: false
+    default: "assets/cla/consent.yaml"
+runs:
+  using: composite
+  steps:
+    - run: ${{ github.action_path }}/inspect.py
+      shell: bash
