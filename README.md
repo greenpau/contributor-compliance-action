@@ -67,4 +67,12 @@ jobs:
 
 ## Commit Message Tags
 
-TODO.
+If a commit message contains the `CONTRIBUTOR_COMPLIANCE=disabled`, then
+this Github Action will still perform all the checks. However, it will not
+fail the PR request if it finds non-compliance.
+
+```
+docs: update README.md
+
+CONTRIBUTOR_COMPLIANCE=disabled
+```
