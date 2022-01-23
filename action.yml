@@ -27,5 +27,7 @@ inputs:
 runs:
   using: composite
   steps:
+    - run: python3 -V
+      shell: bash
     - run: ${{ github.action_path }}/inspect.py
       shell: bash
