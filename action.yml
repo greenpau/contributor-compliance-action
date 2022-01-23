@@ -37,5 +37,5 @@ runs:
         git --no-pager status
         git --no-pager log 
       shell: bash
-    - run: ${{ github.action_path }}/inspect.py
+    - run: ${{ github.action_path }}/scripts/inspect.py
       shell: bash

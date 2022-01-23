@@ -19,7 +19,7 @@ test: linter
 	@echo "DEBUG: completed $@"
 
 linter:
-	@pylint inspect.py
+	@pylint scripts/inspect.py
 	@echo "DEBUG: completed $@"
 
 release:
@@ -27,8 +27,9 @@ release:
 	@if [ $(GIT_BRANCH) != "main" ]; then echo "cannot release to non-main branch $(GIT_BRANCH)" && false; fi
 	@git diff-index --quiet HEAD -- || ( echo "git directory is dirty, commit changes first" && false )
 	@versioned -patch
+	@scripts/update_readme.sh
 	@echo "Patched version"
-	@git add VERSION
+	@git add VERSION README.md
 	@git commit -m "released v`cat VERSION | head -1`"
 	@git tag -a v`cat VERSION | head -1` -m "v`cat VERSION | head -1`"
 	@git push
