@@ -27,11 +27,11 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: python3 -V
-      shell: bash
-    - run: pip list
-      shell: bash
-    - run: env
+    - run: | 
+        python3 -V
+        pip install GitPython
+        pip list
+        env | sort
       shell: bash
     - run: ${{ github.action_path }}/inspect.py
       shell: bash
