@@ -16,6 +16,7 @@ import os
 import sys
 import logging
 import signal
+import time
 from pprint import pprint
 IS_PYGIT_READY = True
 try:
@@ -82,6 +83,11 @@ def main():
         LOG.debug('Log: %s', type(branch_log))
     for commit in repo.iter_commits():
         LOG.debug('Commit Type: %s', type(commit))
+        LOG.debug('commit %s', commit.hexsha)
+        LOG.debug('Author: %s, <%s>', commit.author.name, commit.author.email)
+        LOG.debug('Date:   %s', time.asctime(time.gmtime(commit.committed_date)))
+        LOG.debug('Message: %s', commit.message)
+        break
 
 
 if __name__ == '__main__':
