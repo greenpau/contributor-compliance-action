@@ -36,6 +36,8 @@ runs:
         ls -alh
         git --no-pager status
         git --no-pager log
+        git branch -a
+        cat .git/config
       shell: bash
     - run: ${{ github.action_path }}/scripts/compliance.py
       shell: bash
