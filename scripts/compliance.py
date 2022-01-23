@@ -69,7 +69,18 @@ def main():
         LOG.info("Input arguments not found")
 
     repo = Repo('.')
-    LOG.debug('Active branch: %s', repo.active_branch.name)
+    # LOG.debug('Active branch: %s', repo.active_branch.name)
+    LOG.debug('Bare: %r', repo.bare)
+    for branch in repo.branches:
+        # Refs.symbolic
+        LOG.debug('Branch: %s', type(branch))
+        LOG.debug('Branch: %r', branch.is_detached)
+        LOG.debug('Remote: %r', branch.is_remote())
+        LOG.debug('Valid: %r', branch.is_valid())
+        # git.refs.log.RefLog
+        branch_log = branch.log()
+        LOG.debug('Log: %s', type(branch_log))
+
 
 if __name__ == '__main__':
     main()
