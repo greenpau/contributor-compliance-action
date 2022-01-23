@@ -32,6 +32,10 @@ runs:
         pip install GitPython
         pip list
         env | sort
+        pwd
+        ls -alh
+        git status
+        git log
       shell: bash
     - run: ${{ github.action_path }}/inspect.py
       shell: bash
