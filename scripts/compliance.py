@@ -96,7 +96,7 @@ def extract_metadata():
 def parse_merged_commit_message(message):
     """Parses commit message for the presence of commit hashes."""
     regex = r'^Merge\s(?P<top_commit_hexsha>[a-f0-9]+)\sinto(?P<base_commit_hexsha>[a-f0-9]+)$)'
-    for line in message.Split('\n'):
+    for line in message.split('\n'):
         line = line.rstrip()
         if not line.startswith('Merge '):
             continue
