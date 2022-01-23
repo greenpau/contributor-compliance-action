@@ -16,6 +16,7 @@ import os
 import sys
 import logging
 import signal
+import re
 import time
 from pprint import pprint
 IS_PYGIT_READY = True
@@ -69,26 +70,42 @@ def main():
     else:
         LOG.info("Input arguments not found")
 
+    top_commit_hexsha, base_commit_hexsha = extract_metadata()
+    LOG.info("Top commit SHA:      %s", top_commit_hexsha)
+    LOG.info("Baseline commit SHA: %s", base_commit_hexsha)
+
+def extract_metadata():
+    """Extracts commit hashes from pull request."""
     repo = Repo('.')
-    # LOG.debug('Active branch: %s', repo.active_branch.name)
-    LOG.debug('Bare: %r', repo.bare)
-    for branch in repo.branches:
-        # Refs.symbolic
-        LOG.debug('Commit Type: %s', type(branch))
-        LOG.debug('Branch: %r', branch.is_detached)
-        LOG.debug('Remote: %r', branch.is_remote())
-        LOG.debug('Valid: %r', branch.is_valid())
-        # git.refs.log.RefLog
-        branch_log = branch.log()
-        LOG.debug('Log: %s', type(branch_log))
+    count = 0
+    top_commit_hexsha = ""
+    base_commit_hexsha = ""
     for commit in repo.iter_commits():
+        count += 1
         LOG.debug('Commit Type: %s', type(commit))
         LOG.debug('commit %s', commit.hexsha)
         LOG.debug('Author: %s, <%s>', commit.author.name, commit.author.email)
         LOG.debug('Date:   %s', time.asctime(time.gmtime(commit.committed_date)))
         LOG.debug('Message: %s', commit.message)
-        break
+        top_commit_hexsha, base_commit_hexsha = parse_merged_commit_message(commit.message)
+    if count != 1:
+        msg = "expected 1 commit, got %d" % (count)
+        raise Exception(msg)
+    return top_commit_hexsha, base_commit_hexsha
 
+def parse_merged_commit_message(message):
+    """Parses commit message for the presence of commit hashes."""
+    regex = r'^Merge\s(?P<top_commit_hexsha>[a-f0-9]+)\sinto(?P<base_commit_hexsha>[a-f0-9]+)$)'
+    for line in message.Split('\n'):
+        line = line.rstrip()
+        if not line.startswith('Merge '):
+            continue
+        if not re.match(regex, line):
+            continue
+        LOG.debug('Matched: %s', line)
+        matcher = re.match(regex, line)
+        return matcher.group('top_commit_hexsha'), matcher.group('base_commit_hexsha')
+    raise Exception("commit hashes not found")
 
 if __name__ == '__main__':
     main()
