@@ -73,13 +73,15 @@ def main():
     LOG.debug('Bare: %r', repo.bare)
     for branch in repo.branches:
         # Refs.symbolic
-        LOG.debug('Branch: %s', type(branch))
+        LOG.debug('Commit Type: %s', type(branch))
         LOG.debug('Branch: %r', branch.is_detached)
         LOG.debug('Remote: %r', branch.is_remote())
         LOG.debug('Valid: %r', branch.is_valid())
         # git.refs.log.RefLog
         branch_log = branch.log()
         LOG.debug('Log: %s', type(branch_log))
+    for commit in repo.iter_commits():
+        LOG.debug('Commit Type: %s', type(commit))
 
 
 if __name__ == '__main__':
