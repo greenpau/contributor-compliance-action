@@ -19,7 +19,7 @@ test: linter
 	@echo "DEBUG: completed $@"
 
 linter:
-	@pylint scripts/inspect.py
+	@pylint scripts/compliance.py
 	@echo "DEBUG: completed $@"
 
 release:

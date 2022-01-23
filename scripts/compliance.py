@@ -17,6 +17,12 @@ import sys
 import logging
 import signal
 from pprint import pprint
+IS_PYGIT_READY = True
+try:
+    from git import Repo
+    IS_PYGIT_READY = True
+except ModuleNotFoundError:
+    IS_PYGIT_READY = False
 
 SCRIPT_NAME = str(os.path.basename(__file__)).replace('.pyc', '').replace('.py', '').replace('./', '')
 SCRIPT_DIR = str(__file__).replace(os.path.basename(__file__), '')
@@ -39,6 +45,9 @@ def capture_stdin():
 
 def main():
     """Manages pull request inspection."""
+    if not IS_PYGIT_READY:
+        LOG.error('This script requires GitPython (gitpython.readthedocs.org)')
+        sys.exit(1)
     signal.signal(signal.SIGALRM, trigger_timeout)
     signal.alarm(STDIN_TIMEOUT)
     piped_input_found = False
@@ -58,6 +67,9 @@ def main():
         LOG.info("Input arguments found: %s", args_input)
     else:
         LOG.info("Input arguments not found")
+
+    repo = Repo('.')
+    LOG.debug('Active branch: %s', repo.active_branch.name)
 
 if __name__ == '__main__':
     main()
